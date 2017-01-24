@@ -5,29 +5,59 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <title>WS Client</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script>
-        <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
-    </head>
-    <body>
-        <input type="text" id="msg" />
-        <button onclick="sendMsg()">Send</button>
-        <hr/>
-        <ul id="msgList">
-            
-        </ul>
-    </body>
-    <script>
-        var ws = new WebSocket("ws://192.168.1.19:8080/ws");
-        ws.onmessage = function(data){
-            $('#msgList').append('<li>'+data.data+'</li>');
-        }
-        
-        function sendMsg(){
-            ws.send($('#msg').val());
-        }
-    </script>
+<head>
+    <title>WS Client</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="webjars/materializecss/0.97.7/css/materialize.min.css">
+
+    <script src="webjars/sockjs-client/1.1.1/sockjs.min.js"></script>
+    <script src="webjars/jquery/3.1.1-1/jquery.min.js"></script>
+    <script src="webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+    <script src="webjars/materializecss/0.97.7/js/materialize.min.js"></script>
+</head>
+<body>
+<input type="text" id="msg"/>
+<button onclick="sendMsg()">Send</button>
+<hr/>
+<ul style="position: absolute;" id="msgList">
+
+</ul>
+<ul style="margin-left: 20%" id="pubList">
+
+</ul>
+</body>
+<script>
+    //        var ws = new WebSocket("ws://localhost:8080/ws");
+
+    var sock = new SockJS('/ws');
+
+    var stompClient = Stomp.over(sock);
+
+    stompClient.connect({}, function (frame) {
+        stompClient.subscribe("/topic/pub", function (message) {
+            console.log('message', message.body);
+            $('#pubList').append('<li>' + message.body + '</li>');
+            Materialize.toast(message.body, 6000);
+        }, function (error) {
+            console.log('error : ' + error);
+        });
+    });
+
+    //        sock.onopen = function() {
+    //            console.log('open');
+    //        };
+    //        sock.onmessage = function(e) {
+    //            console.log('message', e.data);
+    //            $('#msgList').append('<li>'+e.data+'</li>');
+    //        };
+    //        sock.onclose = function() {
+    //            console.log('close');
+    //        };
+    //
+    function sendMsg() {
+        stompClient.send("/topic/pub", {}, $('#msg').val());
+    }
+</script>
 </html>
