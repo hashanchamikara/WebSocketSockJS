@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.codelk</groupId>
-	<artifactId>websockert</artifactId>
+	<artifactId>websocket</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>WebSocketDemo</name>
+	<name>WebSocketDemoWithSockJS</name>
 	<description>Demo project for Spring Boot Web Socket</description>
 
 	<parent>
@@ -68,6 +68,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jetty</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>
