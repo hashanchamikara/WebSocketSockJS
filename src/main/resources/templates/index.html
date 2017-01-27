@@ -29,8 +29,6 @@ and open the template in the editor.
 </ul>
 </body>
 <script>
-    //        var ws = new WebSocket("ws://localhost:8080/ws");
-
     var sock = new SockJS('/ws');
 
     var stompClient = Stomp.over(sock);
@@ -45,19 +43,8 @@ and open the template in the editor.
         });
     });
 
-    //        sock.onopen = function() {
-    //            console.log('open');
-    //        };
-    //        sock.onmessage = function(e) {
-    //            console.log('message', e.data);
-    //            $('#msgList').append('<li>'+e.data+'</li>');
-    //        };
-    //        sock.onclose = function() {
-    //            console.log('close');
-    //        };
-    //
     function sendMsg() {
-        stompClient.send("/topic/pub", {}, $('#msg').val());
+        stompClient.send("/app/pub", {}, $('#msg').val());
     }
 </script>
 </html>

@@ -69,6 +69,10 @@
 			<artifactId>spring-boot-starter-jetty</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars.npm</groupId>
 			<artifactId>sockjs</artifactId>
 			<version>0.3.16</version>
@@ -93,6 +97,7 @@
 			<artifactId>materializecss</artifactId>
 			<version>0.97.7</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
